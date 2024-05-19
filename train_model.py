@@ -394,5 +394,28 @@ single_data_point_ss = {
     'poutcome': 'nonexistent',
     'nr.employed': '5017.5',
 }
-
-test_model("term_deposit_model", convert_into_numeric_values(single_data_point_test_1), "Subscribed")
+row_values = {
+    'satisfaction': 'satisfied',
+    'Customer Type': 'Loyal Customer',
+    'Age': 65,
+    'Type of Travel': 'Personal Travel',
+    'Class': 'Eco',
+    'Flight Distance': 265,
+    'Seat comfort': 0,
+    'Departure/Arrival time convenient': 0,
+    'Food and drink': 0,
+    'Gate location': 2,
+    'Inflight wifi service': 2,
+    'Inflight entertainment': 4,
+    'Online support': 2,
+    'Ease of Online booking': 3,
+    'On-board service': 3,
+    'Leg room service': 0,
+    'Baggage handling': 3,
+    'Checkin service': 5,
+    'Cleanliness': 3,
+    'Online boarding': 2,
+    'Departure Delay in Minutes': 0,
+    'Arrival Delay in Minutes': 0
+}
+test_model("airline_model", row_values, "satisfaction")
