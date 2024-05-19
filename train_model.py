@@ -253,8 +253,11 @@ def test_model(model_name, single_data_point1, result_column):
         decision = get_mapping_real_value(load(f"{model_name}/{model_name}_original_cleaned_df.joblib"), load(f"{model_name}/{model_name}_encoded_df.joblib"), result_column, prediction_single[0])
         print(decision)
 
-import pandas as pd
-
+def convert_into_numeric_values(single_data_point_test_1):
+    for key, value in single_data_point_test_1.items():
+        if isinstance(value, (int, float)):
+            single_data_point_test_1[key] = str(value)
+    return single_data_point_test_1
 # Sample DataFrame
 # data = {'column_name': [1, 2, 2, 3, 4, 4, 5]}
 # df = pd.DataFrame(data)
@@ -392,4 +395,4 @@ single_data_point_ss = {
     'nr.employed': '5017.5',
 }
 
-test_model("term_deposit_model", single_data_point_ss, "Subscribed")
+test_model("term_deposit_model", convert_into_numeric_values(single_data_point_test_1), "Subscribed")
