@@ -109,7 +109,7 @@ def encode_columns(df2):
     columns_to_encode = df2.columns.tolist()
     df3 = df2.copy()
     for col in columns_to_encode:
-        if check_if_string(df2[col]):
+        if check_if_string(df2[col]) and not check_column_if_numeric(df2[col].values):
             df3[col] = encode_column(df2[col])
     return df3
 
@@ -253,169 +253,27 @@ def test_model(model_name, single_data_point1, result_column):
         decision = get_mapping_real_value(load(f"{model_name}/{model_name}_original_cleaned_df.joblib"), load(f"{model_name}/{model_name}_encoded_df.joblib"), result_column, prediction_single[0])
         print(decision)
 
+import re
+
+def is_numeric(s):
+    pattern = re.compile(r'^-?\d+(\.\d+)?$')
+    return bool(pattern.match(s))
+
+def check_column_if_numeric(df):
+    for column in df:
+        if pd.api.types.is_numeric_dtype(column):
+            return True
+        else:
+            # Check if the column contains numeric values stored as strings
+            if is_numeric(column):
+                return True
+            else:
+                return False
+
 def convert_into_numeric_values(single_data_point_test_1):
     for key, value in single_data_point_test_1.items():
         if isinstance(value, (int, float)):
             single_data_point_test_1[key] = str(value)
     return single_data_point_test_1
-# Sample DataFrame
-# data = {'column_name': [1, 2, 2, 3, 4, 4, 5]}
-# df = pd.DataFrame(data)
-#
-# # Check for duplicated values
-#
-# # if not check_unique(df['column_name']):
-# #     print(get_unique(df['column_name']))
-# citizenship_status = [
-#     "ByBirth", "ByBirth", "ByBirth", "ByBirth", "ByOtherMeans", "ByBirth", "ByBirth", "ByBirth",
-#     "ByBirth", "ByBirth", "ByBirth", "ByBirth", "ByBirth", "ByBirth", "ByBirth", "ByBirth",
-#     "ByBirth", "ByBirth", "ByBirth", "ByBirth", "ByBirth", "ByBirth", "ByOtherMeans", "ByBirth",
-#     "ByBirth", "ByBirth", "ByBirth", "ByBirth", "ByBirth", "ByBirth", "ByBirth"
-# ]
-# df1 = pd.DataFrame(citizenship_status, columns=["Citizen"])
-#
-# #print(encode_columns(df1["Citizen"]))
-#
-#
-# ethnicities = [
-#     "White", "Black", "Black", "White", "White", "White", "Black", "White",
-#     "Black", "White", "Black", "Black", "White", "White", "White", "White",
-#     "White", "White", "Black", "Black", "White", "White", "White", "Black",
-#     "White", "Black", "Asian", "Asian", "Black", "White", "White", "Black",
-#     "Asian", "White", "White"
-# ]
-#
-# # Convert list to DataFrame
-# df2 = pd.DataFrame({"Ethnicity": ethnicities})
-#
-# print(encode_columns(df2["Ethnicity"]))
 
-# train_model("clean_dataset.csv", "Approved", "clean_dataset.csv", "credit_card_model")
-# train_model("trainset.csv", "Subscribed", "testset.csv", "term_deposit_model")
-#
-# train_model("Airline_customer_satisfaction.csv", "satisfaction", "Airline_customer_satisfaction.csv", "airline_model")
 
-# print(get_mapping_real_value(load_data("trainset.csv"), load("term_deposit_model/term_deposit_model_encoded_df.joblib"), "Subscribed", "1"))
-
-single_data_point = {
-    'age': 41,
-    'job': 'blue-collar',
-    'marital': 'divorced',
-    'education': 'basic.4y',
-    'housing': 'yes',
-    'loan': 'no',
-    'contact': 'telephone',
-    'month': 'may',
-    'day_of_week': 'mon',
-    'duration': 1575,
-    'campaign': 1,
-    'pdays': 999,
-    'poutcome': 'nonexistent',
-    'nr.employed': 5191,
-}
-
-single_data_point2 = {
-    'age': 43,
-    'job': 'management',
-    'marital': 'married',
-    'education': 'professional.course',
-    'housing': 'yes',
-    'loan': 'no',
-    'contact': 'telephone',
-    'month': 'may',
-    'day_of_week': 'tue',
-    'duration': 310,
-    'campaign': 1,
-    'pdays': 999,
-    'poutcome': 'nonexistent',
-    'nr.employed': 5191,
-    'Subscribed': 'no'
-}
-
-single_data_point_test_1 = {
-    'age': 49,
-    'job': 'admin.',
-    'marital': 'single',
-    'education': 'high.school',
-    'housing': 'yes',
-    'loan': 'no',
-    'contact': 'cellular',
-    'month': 'oct',
-    'day_of_week': 'fri',
-    'duration': 136,
-    'campaign': 2,
-    'pdays': 999,
-    'poutcome': 'nonexistent',
-    'nr.employed': 5017.5,
-}
-
-single_data_point_test_1 = {
-    'age': 36,
-    'job': 'admin.',
-    'marital': 'married',
-    'education': 'university.degree',
-    'housing': 'no',
-    'loan': 'no',
-    'contact': 'cellular',
-    'month': 'oct',
-    'day_of_week': 'fri',
-    'duration': 342,
-    'campaign': 1,
-    'pdays': 999,
-    'poutcome': 'failure',
-    'nr.employed': 5017.5,
-}
-
-# df = pd.read_csv("testset.csv")
-#
-# # Define the test_model function
-#
-# # Iterate over the rows of the DataFrame
-# for index, row in df.iterrows():
-#     if index < 10:
-#         # Extract the single data point for the current row
-#         print(row)
-#         test_model("term_deposit_model", single_data_point, "Subscribed")
-#         print("----------------------------------------------------------------------------------")
-
-single_data_point_ss = {
-    'age': '62',
-    'job': 'retired',
-    'marital': 'married',
-    'education': 'university.degree',
-    'housing': 'no',
-    'loan': 'no',
-    'contact': 'cellular',
-    'month': 'oct',
-    'day_of_week': 'fri',
-    'duration': '717',
-    'campaign': '2',
-    'pdays': '999',
-    'poutcome': 'nonexistent',
-    'nr.employed': '5017.5',
-}
-row_values = {
-    'satisfaction': 'satisfied',
-    'Customer Type': 'Loyal Customer',
-    'Age': 65,
-    'Type of Travel': 'Personal Travel',
-    'Class': 'Eco',
-    'Flight Distance': 265,
-    'Seat comfort': 0,
-    'Departure/Arrival time convenient': 0,
-    'Food and drink': 0,
-    'Gate location': 2,
-    'Inflight wifi service': 2,
-    'Inflight entertainment': 4,
-    'Online support': 2,
-    'Ease of Online booking': 3,
-    'On-board service': 3,
-    'Leg room service': 0,
-    'Baggage handling': 3,
-    'Checkin service': 5,
-    'Cleanliness': 3,
-    'Online boarding': 2,
-    'Departure Delay in Minutes': 0,
-    'Arrival Delay in Minutes': 0
-}
-test_model("airline_model", row_values, "satisfaction")
