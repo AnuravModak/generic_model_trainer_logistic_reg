@@ -175,7 +175,7 @@ data_point = {
     "poutcome": "nonexistent",
     "nr.employed": 5191
 }
-test_model("airline_model", row_values, "satisfaction")
+# test_model("airline_model", row_values, "satisfaction")
 
 
 data = {
@@ -195,3 +195,66 @@ data = {
     'nr.employed': [5191, 5191, 5191, 5191, 5191, 5191],
     'Subscribed': ['yes', 'yes', 'yes', 'yes', 'yes', 'yes']
 }
+
+# train_model("divorce.csv", "Divorce_Y_N", "divorce.csv", "divorce_model")
+
+
+single_data_point = {
+    'Sorry_end': 2,
+    'Ignore_diff': 2,
+    'begin_correct': 4,
+    'Contact': 1,
+    'Special_time': 0,
+    'No_home_time': 0,
+    '2_strangers': 0,
+    'enjoy_holiday': 0,
+    'enjoy_travel': 0,
+    'common_goals': 0,
+    'harmony': 1,
+    'freeom_value': 0,
+    'entertain': 1,
+    'people_goals': 1,
+    'dreams': 0,
+    'love': 1,
+    'happy': 0,
+    'marriage': 0,
+    'roles': 0,
+    'trust': 1,
+    'likes': 0,
+    'care_sick': 0,
+    'fav_food': 0,
+    'stresses': 0,
+    'inner_world': 0,
+    'anxieties': 0,
+    'current_stress': 0,
+    'hopes_wishes': 0,
+    'know_well': 0,
+    'friends_social': 1,
+    'Aggro_argue': 1,
+    'Always_never': 2,
+    'negative_personality': 1,
+    'offensive_expressions': 2,
+    'insult': 0,
+    'humiliate': 1,
+    'not_calm': 2,
+    'hate_subjects': 1,
+    'sudden_discussion': 3,
+    'idk_what\'s_going_on': 3,
+    'calm_breaks': 2,
+    'argue_then_leave': 1,
+    'silent_for_calm': 1,
+    'good_to_leave_home': 2,
+    'silence_instead_of_discussion': 3,
+    'silence_for_harm': 2,
+    'silence_fear_anger': 1,
+    'I\'m_right': 3,
+    'accusations': 3,
+    'I\'m_not_guilty': 3,
+    'I\'m_not_wrong': 2,
+    'no_hesitancy_inadequate': 3,
+    'you\'re_inadequate': 2,
+    'incompetence': 1
+}
+
+
+test_model("divorce_model", single_data_point, "Divorce_Y_N")

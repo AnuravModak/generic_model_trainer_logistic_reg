@@ -218,6 +218,11 @@ def get_mapping_real_value(df_train_set, df_encoded, column, encoded_value):
         if encoded_value in unique_values_encoded:
             index = unique_values_encoded.index(encoded_value)
             return unique_values[index]
+        else:
+            return encoded_value
+    else:
+        return encoded_value
+
 
 
 def test_model(model_name, single_data_point1, result_column):
