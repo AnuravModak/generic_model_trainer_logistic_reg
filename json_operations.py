@@ -62,7 +62,9 @@ def remove_product(file_path, product_id):
     with open(file_path, 'w') as file:
         json.dump(products, file, indent=4)
 
-# def get_product_list_json():
+def get_product_list_json():
+    products = read_json()
+    return products
 
 
 # New product to add
@@ -75,4 +77,6 @@ def remove_product(file_path, product_id):
 # Add the new product to the JSON file
 # add_product(file_path, new_product)
 # remove_product(file_path, 1)
+
+print(get_product_list_json())
 
