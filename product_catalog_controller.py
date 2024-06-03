@@ -13,9 +13,10 @@ CORS(app)
 product_bp = Blueprint('product_bp', __name__)
 
 @product_bp.route('/train-model', methods=['POST'])
-def chat_single():
+def train_model():
     data = request.json
     print(data)
+
     return jsonify({'output': "output"}), 200
 
 @product_bp.route('/get-all-products', methods=['GET'])

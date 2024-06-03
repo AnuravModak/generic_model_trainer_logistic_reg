@@ -15,6 +15,7 @@ import matplotlib.pyplot as plt
 
 from joblib import dump
 from joblib import load
+from json_operations import add_product
 
 import pandas as pd
 import re
@@ -28,6 +29,13 @@ warnings.filterwarnings('ignore')
 X_train = pd.DataFrame()
 
 y_train = pd.DataFrame()
+
+
+new_product = {
+    "id": 0,
+    "name": "",
+    "accuracy": 0
+}
 
 def load_data(file_path):
     df1 = pd.read_csv(file_path)
@@ -256,6 +264,11 @@ def train_model(trainset_path, result_column, testset_path, model_name, model_fl
         # Save the trained model
         dump(log_reg_model, model_path)
         dump(df3, base_path + model_name + "_decision_tree" + '_encoded_df.joblib')
+
+    new_product["name"] = model_name
+    new_product["accuracy"] = accuracy_score
+
+    add_product(new_product)
 
     return accuracy_score
 

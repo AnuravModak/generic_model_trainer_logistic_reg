@@ -15,7 +15,7 @@ def initialise_json():
 
 
 # Function to create a JSON file with initial products if it doesn't exist
-def create_initial_json(file_path, products):
+def create_initial_json(products):
     if not os.path.exists(file_path):
         with open(file_path, 'w') as file:
             json.dump(products, file, indent=4)
@@ -32,7 +32,7 @@ def read_json():
 
     return updated_products
 
-def add_product(file_path, new_product):
+def add_product(new_product):
     # Function to add a new product to the JSON file
     # Read the existing products from the file
 
@@ -51,7 +51,7 @@ def add_product(file_path, new_product):
 
 
 # Function to remove a product from the JSON file
-def remove_product(file_path, product_id):
+def remove_product(product_id):
     # Read the existing products from the file
     products = read_json()
 
