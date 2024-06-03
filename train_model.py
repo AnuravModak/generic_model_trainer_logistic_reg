@@ -218,7 +218,7 @@ def print_correlation_matrix(df):
     # Reset the display options to default after printing
     pd.reset_option('display.max_rows')
     pd.reset_option('display.max_columns')
-
+    return corr_matrix
 
 def plot_correlation_matrix_plot(df, model_name):
     corr_matrix = df.corr()
@@ -236,9 +236,9 @@ def train_model(trainset_path, result_column, testset_path, model_name, model_fl
     X = df3[columns_to_encode]
     y = df3[result_column]
 
-    print_correlation_matrix(df3)
+    correlation_matrix = print_correlation_matrix(df3)
 
-    plot_correlation_matrix_plot(df3[columns_to_encode], model_name)
+    # plot_correlation_matrix_plot(df3[columns_to_encode], model_name)
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=10)
 
@@ -269,8 +269,13 @@ def train_model(trainset_path, result_column, testset_path, model_name, model_fl
     new_product["accuracy"] = accuracy_score
 
     add_product(new_product)
+    output_dic = dict()
 
-    return accuracy_score
+    output_dic['accuracy'] = accuracy_score
+    output_dic['correlation_matrix'] = str(correlation_matrix)
+    output_dic['encoded_columns'] = str(columns_to_encode)
+
+    return output_dic
 
 def verify_and_parse(value):
     try:

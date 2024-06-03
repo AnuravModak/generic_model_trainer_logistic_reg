@@ -25,12 +25,19 @@ def create_initial_json(products):
 
 def read_json():
     # Verify the update
-    create_initial_json(file_path, products)
+    create_initial_json(products)
     with open(file_path, 'r') as file:
         updated_products = json.load(file)
         # print(json.dumps(updated_products, indent=4))
 
     return updated_products
+
+def product_exists(name):
+    products = get_product_list_json()
+    if isinstance(products, tuple):  # Check if it returned an error
+        return products
+    matching_products = [product for product in products if product['name'].lower() == name.lower()]
+    return True if matching_products else False
 
 def add_product(new_product):
     # Function to add a new product to the JSON file
@@ -43,7 +50,8 @@ def add_product(new_product):
         new_product["id"] = products[-1]["id"] + 1
     else:
         new_product["id"] = 1
-    products.append(new_product)
+    if not product_exists(new_product["name"]):
+        products.append(new_product)
 
     # Write the updated list back to the file
     with open(file_path, 'w') as file:

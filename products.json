@@ -33,5 +33,10 @@
         "id": 7,
         "name": "Tablet",
         "accuracy": 89.8
+    },
+    {
+        "id": 8,
+        "name": "term_deposit_model",
+        "accuracy": 0.9562178072111847
     }
 ]
