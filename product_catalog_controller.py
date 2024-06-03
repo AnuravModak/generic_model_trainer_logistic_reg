@@ -1,11 +1,10 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Blueprint
 from flask_cors import CORS
 from flask_restful import Resource, Api
+from json_operations import get_product_list_json
 
-model_path = "model/"
 
 app = Flask(__name__)
-api = Api(app, "/api")
 
 CORS(app)
 
@@ -19,6 +18,15 @@ def chat_single():
     print(data)
 
     return jsonify({'output': "output"}), 200
+
+@app.route('/get-all-products', methods=['GET'])
+def get_all_products():
+    products = get_product_list_json()
+    return jsonify(products), 200
+
+
+product_bp = Blueprint('product_bp', __name__)
+app.register_blueprint(product_bp, url_prefix='/api')
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -78,5 +78,5 @@ def get_product_list_json():
 # add_product(file_path, new_product)
 # remove_product(file_path, 1)
 
-print(get_product_list_json())
+# print(get_product_list_json())
 
