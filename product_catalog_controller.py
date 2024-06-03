@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, Blueprint
 from flask_cors import CORS
-from json_operations import get_product_list_json
+from json_operations import *
 from train_model import train_model
 
 
@@ -31,12 +31,19 @@ def train_model_api():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-
-
 @product_bp.route('/get-all-products', methods=['GET'])
 def get_all_products():
     products = get_product_list_json()
     return jsonify(products), 200
+
+@product_bp.route('/get-product', methods=['GET'])
+def get_product_by_id():
+    product_id = request.args.get('id')
+    if not product_id:
+        return jsonify({"error": "ID query parameter is required"}), 400
+    product = get_product_json(int(product_id))
+    return jsonify(product), 200
+
 
 # Register the blueprint with a URL prefix
 app.register_blueprint(product_bp, url_prefix=url_prefix)

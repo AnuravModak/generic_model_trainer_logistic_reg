@@ -73,6 +73,15 @@ def remove_product(product_id):
     with open(file_path, 'w') as file:
         json.dump(products, file, indent=4)
 
+def get_attribute_value_arr(products, attribute_name):
+    product_attr = [product[attribute_name] for product in products]
+    return product_attr
+
+def get_product_json(id):
+    products = read_json()
+    if id in get_attribute_value_arr(products, "id"):
+        return products[id]
+
 def get_product_list_json():
     products = read_json()
     return products
