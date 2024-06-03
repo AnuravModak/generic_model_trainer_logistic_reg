@@ -57,6 +57,9 @@ def add_product(new_product):
     with open(file_path, 'w') as file:
         json.dump(products, file, indent=4)
 
+    new_product = read_json()
+    return new_product[-1]
+
 
 # Function to remove a product from the JSON file
 def remove_product(product_id):

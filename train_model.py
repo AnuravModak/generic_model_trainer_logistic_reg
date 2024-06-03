@@ -267,15 +267,11 @@ def train_model(trainset_path, result_column, testset_path, model_name, model_fl
 
     new_product["name"] = model_name
     new_product["accuracy"] = accuracy_score
+    new_product['correlation_matrix'] = str(correlation_matrix)
+    new_product['encoded_columns'] = str(columns_to_encode)
 
-    add_product(new_product)
-    output_dic = dict()
-
-    output_dic['accuracy'] = accuracy_score
-    output_dic['correlation_matrix'] = str(correlation_matrix)
-    output_dic['encoded_columns'] = str(columns_to_encode)
-
-    return output_dic
+    new_prod = add_product(new_product)
+    return new_prod
 
 def verify_and_parse(value):
     try:

@@ -1,42 +1,23 @@
 [
     {
         "id": 1,
-        "name": "Tablet",
-        "accuracy": 89.8
+        "name": "term_deposit_model",
+        "accuracy": 0.9562178072111847,
+        "correlation_matrix": "                  age       job   marital  ...  poutcome  nr.employed  Subscribed\nage          1.000000  0.096693 -0.370237  ...  0.021631    -0.006064    0.016733\njob          0.096693  1.000000  0.018528  ...  0.045369    -0.075663   -0.073927\nmarital     -0.370237  0.018528  1.000000  ...  0.014133    -0.038737   -0.056395\neducation   -0.125057 -0.060001  0.002582  ... -0.006329     0.001151    0.007653\nhousing     -0.007274 -0.009541 -0.008581  ... -0.025528     0.016751    0.019668\nloan        -0.005472  0.009108  0.007720  ... -0.004414     0.012604    0.005352\ncontact     -0.003099  0.090750  0.047744  ...  0.166149     0.008311   -0.185656\nmonth        0.031068  0.117017  0.025597  ...  0.241196    -0.125213   -0.200594\nday_of_week -0.022986  0.000002  0.025646  ... -0.003489    -0.020109   -0.015930\nduration    -0.019815 -0.003047  0.015756  ...  0.044816    -0.161979   -0.467726\ncampaign     0.013563  0.013897 -0.000914  ... -0.062264     0.122558    0.064421\npdays       -0.017794 -0.045095 -0.019401  ... -0.739934     0.345435    0.263177\npoutcome     0.021631  0.045369  0.014133  ...  1.000000    -0.404065   -0.281190\nnr.employed -0.006064 -0.075663 -0.038737  ... -0.404065     1.000000    0.633393\nSubscribed   0.016733 -0.073927 -0.056395  ... -0.281190     0.633393    1.000000\n\n[15 rows x 15 columns]",
+        "encoded_columns": "['age', 'job', 'marital', 'education', 'housing', 'loan', 'contact', 'month', 'day_of_week', 'duration', 'campaign', 'pdays', 'poutcome', 'nr.employed']"
     },
     {
         "id": 2,
-        "name": "Tablet",
-        "accuracy": 89.8
+        "name": "airline_customer_satisfaction",
+        "accuracy": 0.8287126419028497,
+        "correlation_matrix": "                                   satisfaction  ...  Arrival Delay in Minutes\nsatisfaction                           1.000000  ...                  0.080691\nCustomer Type                          0.292563  ...                  0.004730\nAge                                   -0.117913  ...                 -0.011248\nType of Travel                        -0.108910  ...                  0.005830\nClass                                 -0.196121  ...                 -0.007754\nFlight Distance                        0.039133  ...                  0.110103\nSeat comfort                          -0.242371  ...                 -0.025506\nDeparture/Arrival time convenient      0.015624  ...                  0.002599\nFood and drink                        -0.120568  ...                 -0.014881\nGate location                          0.012272  ...                  0.003640\nInflight wifi service                 -0.227010  ...                 -0.035270\nInflight entertainment                -0.523364  ...                 -0.033321\nOnline support                        -0.389890  ...                 -0.036087\nEase of Online booking                -0.432017  ...                 -0.039806\nOn-board service                      -0.352283  ...                 -0.041456\nLeg room service                      -0.305115  ...                  0.000472\nBaggage handling                      -0.260398  ...                 -0.014164\nCheckin service                       -0.266089  ...                 -0.023860\nCleanliness                           -0.259504  ...                 -0.067208\nOnline boarding                       -0.338118  ...                 -0.021784\nDeparture Delay in Minutes             0.073960  ...                  0.965291\nArrival Delay in Minutes               0.080691  ...                  1.000000\n\n[22 rows x 22 columns]",
+        "encoded_columns": "['Customer Type', 'Age', 'Type of Travel', 'Class', 'Flight Distance', 'Seat comfort', 'Departure/Arrival time convenient', 'Food and drink', 'Gate location', 'Inflight wifi service', 'Inflight entertainment', 'Online support', 'Ease of Online booking', 'On-board service', 'Leg room service', 'Baggage handling', 'Checkin service', 'Cleanliness', 'Online boarding', 'Departure Delay in Minutes', 'Arrival Delay in Minutes']"
     },
     {
         "id": 3,
-        "name": "Tablet",
-        "accuracy": 89.8
-    },
-    {
-        "id": 4,
-        "name": "Tablet",
-        "accuracy": 89.8
-    },
-    {
-        "id": 5,
-        "name": "Tablet",
-        "accuracy": 89.8
-    },
-    {
-        "id": 6,
-        "name": "Tablet",
-        "accuracy": 89.8
-    },
-    {
-        "id": 7,
-        "name": "Tablet",
-        "accuracy": 89.8
-    },
-    {
-        "id": 8,
-        "name": "term_deposit_model",
-        "accuracy": 0.9562178072111847
+        "name": "credit_card_model",
+        "accuracy": 0.8695652173913043,
+        "correlation_matrix": "                  Gender       Age      Debt  ...   ZipCode    Income  Approved\nGender          1.000000  0.035044 -0.041746  ...  0.086007 -0.002063 -0.028934\nAge             0.035044  1.000000  0.202177  ... -0.078690  0.018719  0.164086\nDebt           -0.041746  0.202177  1.000000  ... -0.217903  0.123121  0.206294\nMarried        -0.068062  0.106929  0.074649  ... -0.017074 -0.006899  0.180583\nBankCustomer   -0.071250  0.099477  0.083781  ... -0.009513  0.057273  0.188964\nIndustry       -0.089697  0.120104  0.078030  ... -0.067478  0.023707 -0.196453\nEthnicity      -0.109350  0.237190  0.126237  ... -0.094972  0.086851 -0.057814\nYearsEmployed   0.086544  0.391464  0.298902  ... -0.070495  0.051345  0.322475\nPriorDefault   -0.026047  0.204434  0.244317  ... -0.055010  0.090012  0.720407\nEmployed       -0.077784  0.086037  0.174846  ... -0.044834  0.077652  0.458301\nCreditScore    -0.024630  0.187327  0.271207  ... -0.112816  0.063692  0.406410\nDriversLicense  0.051674  0.053599 -0.013023  ...  0.154924  0.019201  0.031625\nCitizen         0.075413 -0.006481 -0.116975  ...  0.035488  0.102000 -0.063556\nZipCode         0.086007 -0.078690 -0.217903  ...  1.000000  0.059234 -0.099598\nIncome         -0.002063  0.018719  0.123121  ...  0.059234  1.000000  0.175657\nApproved       -0.028934  0.164086  0.206294  ... -0.099598  0.175657  1.000000\n\n[16 rows x 16 columns]",
+        "encoded_columns": "['Gender', 'Age', 'Debt', 'Married', 'BankCustomer', 'Industry', 'Ethnicity', 'YearsEmployed', 'PriorDefault', 'Employed', 'CreditScore', 'DriversLicense', 'Citizen', 'ZipCode', 'Income']"
     }
 ]
