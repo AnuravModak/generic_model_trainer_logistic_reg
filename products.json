@@ -1,0 +1,37 @@
+[
+    {
+        "id": 1,
+        "name": "Tablet",
+        "accuracy": 89.8
+    },
+    {
+        "id": 2,
+        "name": "Tablet",
+        "accuracy": 89.8
+    },
+    {
+        "id": 3,
+        "name": "Tablet",
+        "accuracy": 89.8
+    },
+    {
+        "id": 4,
+        "name": "Tablet",
+        "accuracy": 89.8
+    },
+    {
+        "id": 5,
+        "name": "Tablet",
+        "accuracy": 89.8
+    },
+    {
+        "id": 6,
+        "name": "Tablet",
+        "accuracy": 89.8
+    },
+    {
+        "id": 7,
+        "name": "Tablet",
+        "accuracy": 89.8
+    }
+]

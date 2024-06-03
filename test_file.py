@@ -196,7 +196,7 @@ data = {
     'Subscribed': ['yes', 'yes', 'yes', 'yes', 'yes', 'yes']
 }
 
-# train_model("divorce.csv", "Divorce_Y_N", "divorce.csv", "divorce_model")
+print("Accuracy ############# "+str(train_model("bank-full.csv", "y", "bank-num.csv", "bank_saransh", 1)))
 
 
 single_data_point = {
@@ -257,4 +257,4 @@ single_data_point = {
 }
 
 
-test_model("divorce_model", single_data_point, "Divorce_Y_N")
+# test_model("divorce_model", single_data_point, "Divorce_Y_N")

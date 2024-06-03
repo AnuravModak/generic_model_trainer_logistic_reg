@@ -7,7 +7,12 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 
 from sklearn.metrics import classification_report
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.preprocessing import OneHotEncoder
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
 from joblib import dump
 from joblib import load
 
@@ -112,12 +117,11 @@ def encode_columns(df2):
             df3[col] = encode_column(df2[col])
     return df3
 
-
-def run_logistic_regression(df3, X_train, X_test, y_train, y_test, result_column, testset_path, model_name):
+def run_decision_tree(df3, X_train, X_test, y_train, y_test, result_column, testset_path, model_name):
+    global accuracy1
     pipelines = {
-        'Logistic Regression': make_pipeline(StandardScaler(), LogisticRegression(max_iter=1000)),
+        'Decision Tree': make_pipeline(StandardScaler(), DecisionTreeClassifier()),
     }
-    accuracy1 = 0.0
     for name, pipeline in pipelines.items():
         print(f"Training and evaluating {name}...")
         # Train the model using the pipeline
@@ -136,21 +140,52 @@ def run_logistic_regression(df3, X_train, X_test, y_train, y_test, result_column
         print(f"Training {name}...")
         pipeline.fit(X_train, y_train)
 
+    # Extract feature importances or coefficients (if applicable)
+    feature_importances = {}
+    for name, pipeline in pipelines.items():
+        if 'Decision Tree' in name:
+            feature_importances[name] = pipeline.named_steps['decisiontreeclassifier'].feature_importances_
+
+    return accuracy1
+
+def run_logistic_regression(df3, X_train, X_test, y_train, y_test, result_column, testset_path, model_name):
+    global accuracy
+    pipelines = {
+        'Logistic Regression': make_pipeline(StandardScaler(), LogisticRegression(max_iter=1000)),
+    }
+    for name, pipeline in pipelines.items():
+        print(f"Training and evaluating {name}...")
+        # Train the model using the pipeline
+        pipeline.fit(X_train, y_train)
+        # Make predictions on the testing set
+        y_pred = pipeline.predict(X_test)
+        # Evaluate the classifier's performance
+        accuracy = accuracy_score(y_test, y_pred)
+        print("Accuracy:", accuracy)
+        print("Classification Report:")
+        print(classification_report(y_test, y_pred))
+        print("---------------------------------------------------------")
+
+    # Train each model
+    for name, pipeline in pipelines.items():
+        print(f"Training {name}...")
+        pipeline.fit(X_train, y_train)
+
     # Extract feature importances or coefficients
     feature_importances = {}
     for name, pipeline in pipelines.items():
         if 'Logistic Regression' in name:
             feature_importances[name] = pipeline.named_steps['logisticregression'].coef_[0]
 
-    df_test = prerequisites(testset_path, model_name)
-    columns_to_encode = df_test.columns.tolist()
-    X_test = df_test[columns_to_encode]
-    y_test = df_test[result_column]
+    # df_test = prerequisites(testset_path, model_name)
+    # columns_to_encode = df_test.columns.tolist()
+    # X_test = df_test[columns_to_encode]
+    # y_test = df_test[result_column]
+    #
+    # X_train = df3[columns_to_encode]
+    # y_train = df3[result_column]
 
-    X_train = df3[columns_to_encode]
-    y_train = df3[result_column]
-
-    return accuracy1
+    return accuracy
 
 def make_training_directory(directory_name):
 
@@ -165,30 +200,64 @@ def make_training_directory(directory_name):
     else:
         print(f"Directory '{directory_name}' already exists.")
 
-def train_model(trainset_path, result_column, testset_path, model_name):
+def print_correlation_matrix(df):
+    pd.set_option('display.max_rows', None)
+    pd.set_option('display.max_columns', None)
+    corr_matrix = df.corr()
+    print("Correlation Matrix:")
+    print(corr_matrix)
+    print("---------------------------------------------------------")
+    # Reset the display options to default after printing
+    pd.reset_option('display.max_rows')
+    pd.reset_option('display.max_columns')
+
+
+def plot_correlation_matrix_plot(df, model_name):
+    corr_matrix = df.corr()
+    plt.figure(figsize=(10, 8))
+    sns.heatmap(corr_matrix, annot=True, fmt='.2f', cmap='coolwarm', linewidths=0.5)
+    plt.title(f'Correlation Matrix for {model_name}')
+    plt.show()
+
+def train_model(trainset_path, result_column, testset_path, model_name, model_flag):
     make_training_directory(model_name)
     df3 = prerequisites(trainset_path, model_name)
     columns_to_encode = df3.columns.tolist()
-    columns_to_encode.remove(result_column)
+    if result_column in columns_to_encode:
+        columns_to_encode.remove(result_column)
     X = df3[columns_to_encode]
     y = df3[result_column]
 
+    print_correlation_matrix(df3)
+
+    plot_correlation_matrix_plot(df3[columns_to_encode], model_name)
+
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=10)
 
-    run_logistic_regression(df3, X_train, X_test, y_train, y_test, result_column, testset_path, model_name)
+    if model_flag == 1:
+         accuracy_score = run_logistic_regression(df3, X_train, X_test, y_train, y_test, result_column, testset_path, model_name)
+         # Fit the model to the training data
+         log_reg_model = LogisticRegression(max_iter=1000)
+         log_reg_model.fit(X_train, y_train)
+         base_path = model_name + os.path.sep
+         model_path = base_path + model_name + "_log_reg" + ".joblib"
+         # Save the trained model
+         dump(log_reg_model, model_path)
 
-    log_reg_model = LogisticRegression(max_iter=1000)
+         dump(df3, base_path + model_name + "_log_reg" + '_encoded_df.joblib')
 
-    # Fit the model to the training data
-    log_reg_model.fit(X_train, y_train)
-    base_path = model_name+os.path.sep
-    model_path = base_path+model_name+".joblib"
-    # Save the trained model
-    dump(log_reg_model, model_path)
+         print("Model trained and saved successfully at:", model_path)
+    elif model_flag == 2:
+        accuracy_score = run_decision_tree(df3, X_train, X_test, y_train, y_test, result_column, testset_path, model_name)
+        log_reg_model = DecisionTreeClassifier()
+        log_reg_model.fit(X_train, y_train)
+        base_path = model_name + os.path.sep
+        model_path = base_path + model_name + "_decision_tree" + ".joblib"
+        # Save the trained model
+        dump(log_reg_model, model_path)
+        dump(df3, base_path + model_name + "_decision_tree" + '_encoded_df.joblib')
 
-    dump(df3, base_path+model_name+'_encoded_df.joblib')
-
-    print("Model trained and saved successfully at:", model_path)
+    return accuracy_score
 
 def verify_and_parse(value):
     try:
@@ -244,8 +313,6 @@ def test_model(model_name, single_data_point1, result_column):
         columns_to_encode = single_df.columns.tolist()
         if result_column in columns_to_encode:
             columns_to_encode.remove(result_column)
-
-
         # Select features
         X_single = single_df[columns_to_encode]
 
