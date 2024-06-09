@@ -208,17 +208,21 @@ def make_training_directory(directory_name):
     else:
         print(f"Directory '{directory_name}' already exists.")
 
+import pandas as pd
+
 def print_correlation_matrix(df):
     pd.set_option('display.max_rows', None)
     pd.set_option('display.max_columns', None)
+    pd.set_option('display.width', 1000)  # Set a large width to display all columns
     corr_matrix = df.corr()
     print("Correlation Matrix:")
-    print(corr_matrix)
+    # Convert correlation matrix to string with formatting
+    corr_str = corr_matrix.to_string()
+    # Print the formatted correlation matrix
+    print(corr_str)
     print("---------------------------------------------------------")
-    # Reset the display options to default after printing
-    pd.reset_option('display.max_rows')
-    pd.reset_option('display.max_columns')
     return corr_matrix
+
 
 def plot_correlation_matrix_plot(df, model_name):
     corr_matrix = df.corr()
@@ -267,8 +271,11 @@ def train_model(trainset_path, result_column, testset_path, model_name, model_fl
 
     new_product["name"] = model_name
     new_product["accuracy"] = accuracy_score
-    new_product['correlation_matrix'] = str(correlation_matrix)
-    new_product['encoded_columns'] = str(columns_to_encode)
+    new_product['correlationMatrix'] = str(correlation_matrix)
+    new_product['encodedColumns'] = json.dumps(columns_to_encode)
+    new_product['trainModelPath'] = trainset_path
+    new_product['testModelPath'] = testset_path
+    new_product['decisionColumn'] = result_column
 
     new_prod = add_product(new_product)
     return new_prod

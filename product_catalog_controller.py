@@ -1,3 +1,5 @@
+import json
+
 from flask import Flask, request, jsonify, Blueprint
 from flask_cors import CORS
 from json_operations import *
@@ -36,6 +38,15 @@ def get_all_products():
     products = get_product_list_json()
     return jsonify(products), 200
 
+
+@product_bp.route('/re-train-all', methods=['GET'])
+def re_train_all_models():
+    products = get_product_list_json()
+
+    for product in products:
+        train_model(product["train_model_path"], )
+    return jsonify(products), 200
+
 @product_bp.route('/get-product', methods=['GET'])
 def get_product_by_id():
     product_id = request.args.get('id')
@@ -53,4 +64,4 @@ def health_check():
     return 'Server is up and running!', 200
 
 if __name__ == '__main__':
-    app.run(debug=True, port=8080)
+    app.run(debug=True, port=8089)
