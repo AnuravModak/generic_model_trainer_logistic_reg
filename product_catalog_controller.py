@@ -1,9 +1,9 @@
 import json
 
-from flask import Flask, request, jsonify, Blueprint
+from flask import Flask, request, jsonify, Blueprint, send_file
 from flask_cors import CORS
 from json_operations import *
-from train_model import train_model
+from train_model import *
 
 
 url_prefix = '/api'
@@ -55,6 +55,12 @@ def get_product_by_id():
     product = get_product_json(int(product_id))
     return jsonify(product), 200
 
+@product_bp.route('/get-correlation-matrix', methods=['GET'])
+def get_correlation_plot():
+    model_name = request.args.get('model_name')
+    trainset_name = request.args.get('trainset_name')
+    img = get_correlation_matrix_image(trainset_name, model_name)
+    return send_file(img, mimetype='image/png')
 
 # Register the blueprint with a URL prefix
 app.register_blueprint(product_bp, url_prefix=url_prefix)
