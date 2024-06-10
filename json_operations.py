@@ -80,7 +80,7 @@ def get_attribute_value_arr(products, attribute_name):
 def get_product_json(id):
     products = read_json()
     if id in get_attribute_value_arr(products, "id"):
-        return products[id]
+        return products[id-1]
 
 def get_product_list_json():
     products = read_json()
