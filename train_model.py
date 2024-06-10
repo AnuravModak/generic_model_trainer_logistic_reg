@@ -237,7 +237,9 @@ def plot_correlation_matrix_plot(df, model_name):
 def get_correlation_matrix_image(trainset_path, model_name):
     df = prerequisites(trainset_path, model_name)
     corr_matrix = df.corr()
-    plt.figure(figsize=(10, 8))
+    num_vars = len(corr_matrix.columns)
+    fig_size = (num_vars, num_vars * 0.8)
+    plt.figure(figsize=fig_size)
     sns.heatmap(corr_matrix, annot=True, fmt='.2f', cmap='coolwarm', linewidths=0.5)
     plt.title(f'Correlation Matrix for {model_name}')
     buf = io.BytesIO()
