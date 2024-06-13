@@ -256,5 +256,4 @@ single_data_point = {
     'incompetence': 1
 }
 
-
 # test_model("divorce_model", single_data_point, "Divorce_Y_N")

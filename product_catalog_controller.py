@@ -55,11 +55,13 @@ def get_product_by_id():
     product = get_product_json(int(product_id))
     return jsonify(product), 200
 
-@product_bp.route('/get-correlation-matrix', methods=['GET'])
-def get_correlation_plot():
-    model_name = request.args.get('model_name')
-    trainset_name = request.args.get('trainset_name')
-    img = get_correlation_matrix_image(trainset_name, model_name)
+@product_bp.route('/get-correlation-matrix-image', methods=['GET'])
+def get_correlation_plot_image  ():
+    product_id = request.args.get('id')
+    if not product_id:
+        return jsonify({"error": "ID query parameter is required"}), 400
+    product = get_product_json(int(product_id))
+    img = get_correlation_matrix_image(product["trainModelPath"], product["name"])
     return send_file(img, mimetype='image/png')
 
 # Register the blueprint with a URL prefix
