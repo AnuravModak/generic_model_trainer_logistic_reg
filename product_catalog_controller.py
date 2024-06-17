@@ -45,7 +45,15 @@ def re_train_all_models():
     products = get_product_list_json()
 
     for product in products:
-        train_model(product["train_model_path"], )
+        train_model(
+            product["trainModelPath"],
+            product["decisionColumn"],
+            product["testModelPath"],
+            product["name"],
+            product["encodedColumns"],
+            product["modelFlag"]
+        )
+    products = get_product_list_json()
     return jsonify(products), 200
 
 @product_bp.route('/get-product', methods=['GET'])

@@ -34,6 +34,13 @@ X_train = pd.DataFrame()
 y_train = pd.DataFrame()
 
 
+# Load configuration from JSON file
+with open('config.json', 'r') as config_file:
+    config = json.load(config_file)
+
+commons_file_path = config["commons_file_path"]
+
+
 new_product = {
     "id": 0,
     "name": "",
@@ -106,7 +113,7 @@ def check_if_string(df):
 def prerequisites(trainset_path, model_name):
     df1 = load_data(trainset_path)
     make_training_directory(model_name)
-    base_path = model_name+os.path.sep
+    base_path = commons_file_path+model_name+os.path.sep
 
     print(df1)
 
@@ -201,7 +208,7 @@ def run_logistic_regression(df3, X_train, X_test, y_train, y_test, result_column
 def make_training_directory(directory_name):
 
     # Specify the path where you want to create the directory
-    directory_path = os.path.join(os.getcwd(), directory_name)
+    directory_path = os.path.join(os.getcwd(), commons_file_path + directory_name)
 
     # Check if the directory already exists
     if not os.path.exists(directory_path):
@@ -269,7 +276,7 @@ def train_model(trainset_path, result_column, testset_path, model_name, columns_
          # Fit the model to the training data
          log_reg_model = LogisticRegression(max_iter=1000)
          log_reg_model.fit(X_train, y_train)
-         base_path = model_name + os.path.sep
+         base_path = commons_file_path+model_name + os.path.sep
          model_path = base_path + model_name + "_log_reg" + ".joblib"
          # Save the trained model
          dump(log_reg_model, model_path)
@@ -281,7 +288,7 @@ def train_model(trainset_path, result_column, testset_path, model_name, columns_
         accuracy_score = run_decision_tree(df3, X_train, X_test, y_train, y_test, result_column, testset_path, model_name)
         log_reg_model = DecisionTreeClassifier()
         log_reg_model.fit(X_train, y_train)
-        base_path = model_name + os.path.sep
+        base_path = commons_file_path + model_name + os.path.sep
         model_path = base_path + model_name + "_decision_tree" + ".joblib"
         # Save the trained model
         dump(log_reg_model, model_path)
@@ -289,11 +296,12 @@ def train_model(trainset_path, result_column, testset_path, model_name, columns_
 
     new_product["name"] = model_name
     new_product["accuracy"] = accuracy_score
-    new_product['correlationMatrix'] = str(correlation_matrix)
-    new_product['encodedColumns'] = json.dumps(columns_to_encode)
+    # new_product['correlationMatrix'] = str(correlation_matrix)
+    new_product['encodedColumns'] = columns_to_encode
     new_product['trainModelPath'] = trainset_path
     new_product['testModelPath'] = testset_path
     new_product['decisionColumn'] = result_column
+    new_product['modelFlag'] = model_flag
 
     new_prod = add_product(new_product)
     return new_prod
@@ -334,7 +342,7 @@ def get_mapping_real_value(df_train_set, df_encoded, column, encoded_value):
 
 def test_model(model_name, single_data_point1, result_column):
     loaded_model = None
-    base_path = model_name+os.path.sep
+    base_path = commons_file_path + model_name+os.path.sep
 
     try:
         loaded_model = load(base_path+model_name+'.joblib')
