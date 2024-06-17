@@ -38,7 +38,24 @@ y_train = pd.DataFrame()
 with open('config.json', 'r') as config_file:
     config = json.load(config_file)
 
+import os
+
+def create_directory(directory_path):
+    try:
+        os.makedirs(directory_path, exist_ok=True)
+        print(f"Directory '{directory_path}' created successfully.")
+    except OSError as error:
+        print(f"Error creating directory '{directory_path}': {error}")
+
+
 commons_file_path = config["commons_file_path"]
+commons_models_file_path = config["commons_models_file_path"]
+commons_train_set_file_path = config["commons_train_set_path"]
+commons_test_set_file_path = config["commons_test_set_path"]
+
+create_directory(commons_file_path)
+create_directory(commons_train_set_file_path)
+create_directory(commons_test_set_file_path)
 
 
 new_product = {
@@ -113,7 +130,7 @@ def check_if_string(df):
 def prerequisites(trainset_path, model_name):
     df1 = load_data(trainset_path)
     make_training_directory(model_name)
-    base_path = commons_file_path+model_name+os.path.sep
+    base_path = commons_models_file_path+model_name+os.path.sep
 
     print(df1)
 
@@ -208,7 +225,7 @@ def run_logistic_regression(df3, X_train, X_test, y_train, y_test, result_column
 def make_training_directory(directory_name):
 
     # Specify the path where you want to create the directory
-    directory_path = os.path.join(os.getcwd(), commons_file_path + directory_name)
+    directory_path = os.path.join(os.getcwd(), commons_models_file_path + directory_name)
 
     # Check if the directory already exists
     if not os.path.exists(directory_path):
@@ -256,6 +273,8 @@ def get_correlation_matrix_image(trainset_path, model_name):
     return buf
 
 def train_model(trainset_path, result_column, testset_path, model_name, columns_to_encode, model_flag):
+    trainset_path = commons_train_set_file_path + trainset_path
+    testset_path = commons_test_set_file_path + testset_path
     make_training_directory(model_name)
     df3 = prerequisites(trainset_path, model_name)
     if len(columns_to_encode) == 0:
@@ -276,7 +295,7 @@ def train_model(trainset_path, result_column, testset_path, model_name, columns_
          # Fit the model to the training data
          log_reg_model = LogisticRegression(max_iter=1000)
          log_reg_model.fit(X_train, y_train)
-         base_path = commons_file_path+model_name + os.path.sep
+         base_path = commons_models_file_path+model_name + os.path.sep
          model_path = base_path + model_name + "_log_reg" + ".joblib"
          # Save the trained model
          dump(log_reg_model, model_path)
@@ -288,7 +307,7 @@ def train_model(trainset_path, result_column, testset_path, model_name, columns_
         accuracy_score = run_decision_tree(df3, X_train, X_test, y_train, y_test, result_column, testset_path, model_name)
         log_reg_model = DecisionTreeClassifier()
         log_reg_model.fit(X_train, y_train)
-        base_path = commons_file_path + model_name + os.path.sep
+        base_path = commons_models_file_path + model_name + os.path.sep
         model_path = base_path + model_name + "_decision_tree" + ".joblib"
         # Save the trained model
         dump(log_reg_model, model_path)
@@ -342,7 +361,7 @@ def get_mapping_real_value(df_train_set, df_encoded, column, encoded_value):
 
 def test_model(model_name, single_data_point1, result_column):
     loaded_model = None
-    base_path = commons_file_path + model_name+os.path.sep
+    base_path = commons_models_file_path + model_name+os.path.sep
 
     try:
         loaded_model = load(base_path+model_name+'.joblib')
