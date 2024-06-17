@@ -248,10 +248,11 @@ def get_correlation_matrix_image(trainset_path, model_name):
     plt.close()
     return buf
 
-def train_model(trainset_path, result_column, testset_path, model_name, model_flag):
+def train_model(trainset_path, result_column, testset_path, model_name, columns_to_encode, model_flag):
     make_training_directory(model_name)
     df3 = prerequisites(trainset_path, model_name)
-    columns_to_encode = df3.columns.tolist()
+    if len(columns_to_encode) == 0:
+        columns_to_encode = df3.columns.tolist()
     if result_column in columns_to_encode:
         columns_to_encode.remove(result_column)
     X = df3[columns_to_encode]

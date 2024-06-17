@@ -20,7 +20,8 @@ def train_model_api():
     data = request.json
     try:
         # Call the train_model function with the provided data
-        results = train_model(data["train_file_path"], data["decision_column"], data["test_file_path"], data["model_name"], data["model_flag"])
+        columns_to_encode = data["encoded_columns"]
+        results = train_model(data["train_file_path"], data["decision_column"], data["test_file_path"], data["model_name"], columns_to_encode, data["model_flag"])
 
         # if isinstance(results, tuple):
         #     # If results is a tuple, convert it to a JSON response
