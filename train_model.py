@@ -35,7 +35,7 @@ y_train = pd.DataFrame()
 
 
 # Load configuration from JSON file
-with open('config.json', 'r') as config_file:
+with open('../commons/config.json', 'r') as config_file:
     config = json.load(config_file)
 
 import os

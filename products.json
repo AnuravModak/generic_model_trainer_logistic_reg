@@ -59,8 +59,8 @@
             "you're_inadequate",
             "incompetence"
         ],
-        "trainModelPath": "divorce.csv",
-        "testModelPath": "divorse.csv",
+        "trainModelPath": "../commons/train_sets/divorce.csv",
+        "testModelPath": "../commons/test_sets/divorse.csv",
         "decisionColumn": "Divorce_Y_N",
         "modelFlag": 1
     },
@@ -85,8 +85,8 @@
             "ZipCode",
             "Income"
         ],
-        "trainModelPath": "clean_dataset.csv",
-        "testModelPath": "clean_dataset.csv",
+        "trainModelPath": "../commons/train_sets/clean_dataset.csv",
+        "testModelPath": "../commons/test_sets/clean_dataset.csv",
         "decisionColumn": "Approved",
         "modelFlag": 1
     },
@@ -117,8 +117,8 @@
             "Departure Delay in Minutes",
             "Arrival Delay in Minutes"
         ],
-        "trainModelPath": "Airline_customer_satisfaction.csv",
-        "testModelPath": "Airline_customer_satisfaction.csv",
+        "trainModelPath": "../commons/train_sets/Airline_customer_satisfaction.csv",
+        "testModelPath": "../commons/test_sets/Airline_customer_satisfaction.csv",
         "decisionColumn": "satisfaction",
         "modelFlag": 1
     }

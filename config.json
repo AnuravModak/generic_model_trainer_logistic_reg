@@ -1,6 +1,0 @@
-{
-    "commons_file_path": "../commons/",
-    "commons_train_set_path": "../commons/train_sets/",
-    "commons_test_set_path": "../commons/test_sets/",
-    "commons_models_file_path" : "../commons/models/"
-}
