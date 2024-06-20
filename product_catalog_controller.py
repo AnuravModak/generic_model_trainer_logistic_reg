@@ -22,7 +22,7 @@ def train_model_api():
         # Call the train_model function with the provided data
         columns_to_encode = data["encodedColumns"]
         results = train_model(data["trainFilePath"], data["decisionColumn"], data["testFilePath"], data["modelName"],
-                              columns_to_encode, data["modelFlag"])
+                              columns_to_encode, int(data["modelFlag"]))
 
         # if isinstance(results, tuple):
         #     # If results is a tuple, convert it to a JSON response
@@ -33,7 +33,7 @@ def train_model_api():
 
         return jsonify(results), 200
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": str(e.__cause__)}), 500
 
 
 @product_bp.route('/get-all-products', methods=['GET'])
