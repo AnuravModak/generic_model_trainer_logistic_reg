@@ -60,7 +60,7 @@
             "incompetence"
         ],
         "trainModelPath": "../commons/train_sets/divorce.csv",
-        "testModelPath": "../commons/test_sets/divorse.csv",
+        "testModelPath": "../commons/test_sets/divorce.csv",
         "decisionColumn": "Divorce_Y_N",
         "modelFlag": 1
     },
