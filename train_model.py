@@ -237,6 +237,20 @@ def make_training_directory(directory_name):
 
 import pandas as pd
 
+def get_correlation_matrix(trainset_name, model_name, columns_to_encode, result_column, number_of_train_data):
+    trainset_path = commons_train_set_file_path + trainset_name
+    make_training_directory(model_name)
+    df = prerequisites(trainset_path, model_name)
+    df = df.head(int(number_of_train_data))
+    if len(columns_to_encode) == 0:
+        columns_to_encode = df.columns.tolist()
+    if result_column in columns_to_encode:
+        columns_to_encode.remove(result_column)
+
+    corr_mat = print_correlation_matrix(df)
+    return corr_mat
+
+
 def print_correlation_matrix(df):
     pd.set_option('display.max_rows', None)
     pd.set_option('display.max_columns', None)

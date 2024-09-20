@@ -77,6 +77,23 @@ def get_correlation_plot_image():
     img = get_correlation_matrix_image(product["trainModelPath"], product["name"])
     return send_file(img, mimetype='image/png')
 
+@product_bp.route('/get-correlation-matrix-info', methods=['POST'])
+def get_correlation_plot_text():
+    data = request.json
+    trainset_name = data['train_set_name']
+    model_name = data['model_name']
+    columns_to_encode = data['columns_to_encode']
+    result_column = data['result_column']
+    number_of_train_data = data['number_of_train_data']
+
+    # Check if any of the required parameters are missing
+    if not all([trainset_name, model_name, result_column, number_of_train_data]):
+        return jsonify({"error": "improper request"}), 400
+
+    corr_mat = get_correlation_matrix(trainset_name, model_name, columns_to_encode, result_column, number_of_train_data)
+    return jsonify({"corr_mat": str(corr_mat)}), 200
+
+
 
 # Register the blueprint with a URL prefix
 app.register_blueprint(product_bp, url_prefix=url_prefix)
@@ -88,4 +105,4 @@ def health_check():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=7654, host="0.0.0.0")
+    app.run(debug=True, port=7654)
