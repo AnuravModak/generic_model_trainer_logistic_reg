@@ -274,17 +274,18 @@ def print_correlation_matrix(df):
     return corr_matrix
 
 
-def plot_correlation_matrix_plot(df, model_name):
-    corr_matrix = df.corr()
-    plt.figure(figsize=(10, 8))
-    sns.heatmap(corr_matrix, annot=True, fmt='.2f', cmap='coolwarm', linewidths=0.5)
-    plt.title(f'Correlation Matrix for {model_name}')
-    # plt.show()
-    buf = io.BytesIO()
-    plt.savefig(buf, format='png')
-    buf.seek(0)
-    plt.close()
-    return buf
+# def plot_correlation_matrix_plot(df, model_name):
+#     df = prerequisites(trainset_path, model_name)
+#     corr_matrix = df.corr()
+#     plt.figure(figsize=(10, 8))
+#     sns.heatmap(corr_matrix, annot=True, fmt='.2f', cmap='coolwarm', linewidths=0.5)
+#     plt.title(f'Correlation Matrix for {model_name}')
+#     # plt.show()
+#     buf = io.BytesIO()
+#     plt.savefig(buf, format='png')
+#     buf.seek(0)
+#     plt.close()
+#     return buf
 
 def get_correlation_matrix_image(trainset_path, model_name):
     df = prerequisites(trainset_path, model_name)

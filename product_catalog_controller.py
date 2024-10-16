@@ -84,8 +84,7 @@ def get_correlation_plot_image_df():
         if file_path == "":
             return jsonify({"error": "File not found"}), 500
         else:
-            df = load_data(file_path)
-            img = plot_correlation_matrix_plot(df, model_name)
+            img = get_correlation_matrix_image(file_path, model_name)
             return send_file(img, mimetype='image/png')
     except Exception as e:
         return jsonify({"error": str(e.__cause__)}), 500
