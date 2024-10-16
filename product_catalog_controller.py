@@ -68,6 +68,20 @@ def get_product_by_id():
     return jsonify(product), 200
 
 
+@product_bp.route('/get-correlation-matrix-image-df', methods=['POST'])
+def get_correlation_plot_image_df():
+    data = request.json
+    try:
+        model_name = data["model_name"]
+        product = get_product_json_name(model_name)
+        trainset_path = product["trainModelPath"]
+        df = load_data(trainset_path)
+        img = plot_correlation_matrix_plot(df, model_name)
+        return send_file(img, mimetype='image/png')
+    except Exception as e:
+        return jsonify({"error": str(e.__cause__)}), 500
+
+
 @product_bp.route('/get-correlation-matrix-image', methods=['GET'])
 def get_correlation_plot_image():
     product_id = request.args.get('id')

@@ -82,6 +82,16 @@ def get_product_json(id):
     if id in get_attribute_value_arr(products, "id"):
         return products[id-1]
 
+def get_product_json_name(name):
+    products = read_json()
+    # Iterate through products and find the one with the matching name
+    for product in products:
+        if product["name"] == name:
+            return product
+    # Return None if no product is found with the given name
+    return None
+
+
 def get_product_list_json():
     products = read_json()
     return products
