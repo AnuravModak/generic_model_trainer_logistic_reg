@@ -25,6 +25,9 @@ import json
 import os
 import io
 import warnings
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+
 
 
 warnings.filterwarnings('ignore')
@@ -191,6 +194,12 @@ def run_logistic_regression(df3, X_train, X_test, y_train, y_test, result_column
     for name, pipeline in pipelines.items():
         print(f"Training and evaluating {name}...")
         # Train the model using the pipeline
+        print("X_train shape:", X_train.shape)
+        print("y_train shape:", y_train.shape)
+        print(X_train.dtypes)
+
+        print(X_train.isnull().sum())
+
         pipeline.fit(X_train, y_train)
         # Make predictions on the testing set
         y_pred = pipeline.predict(X_test)
@@ -270,7 +279,12 @@ def plot_correlation_matrix_plot(df, model_name):
     plt.figure(figsize=(10, 8))
     sns.heatmap(corr_matrix, annot=True, fmt='.2f', cmap='coolwarm', linewidths=0.5)
     plt.title(f'Correlation Matrix for {model_name}')
-    plt.show()
+    # plt.show()
+    buf = io.BytesIO()
+    plt.savefig(buf, format='png')
+    buf.seek(0)
+    plt.close()
+    return buf
 
 def get_correlation_matrix_image(trainset_path, model_name):
     df = prerequisites(trainset_path, model_name)
@@ -298,11 +312,24 @@ def train_model(trainset_path, result_column, testset_path, model_name, columns_
     X = df3[columns_to_encode]
     y = df3[result_column]
 
-    correlation_matrix = print_correlation_matrix(df3)
+    # correlation_matrix = print_correlation_matrix(df3)
 
     # plot_correlation_matrix_plot(df3[columns_to_encode], model_name)
+    numerical_features = df3.select_dtypes(include=['int64', 'float64']).columns.tolist()
+    # Create a column transformer for preprocessing
+    preprocessor = ColumnTransformer(
+        transformers=[
+            ('num', StandardScaler(), numerical_features),
+            ('cat', OneHotEncoder(), columns_to_encode)
+        ])
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=10)
+    # Create the pipeline with Logistic Regression
+    pipeline = Pipeline(steps=[
+        ('preprocessor', preprocessor),
+        ('classifier', LogisticRegression(max_iter=1000))  # Increase max_iter if necessary
+    ])
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.5, random_state=10)
 
     if model_flag == 1:
          accuracy_score = run_logistic_regression(df3, X_train, X_test, y_train, y_test, result_column, testset_path, model_name)
@@ -338,6 +365,37 @@ def train_model(trainset_path, result_column, testset_path, model_name, columns_
 
     new_prod = add_product(new_product)
     return new_prod
+
+# def filter_data(df3, result_column):
+#     # Assuming `df3` is a DataFrame and `result_column` is defined
+#     columns_to_encode = df3.select_dtypes(include=['object']).columns.tolist()
+#
+#     # If result_column is categorical, remove it from the encoding list
+#     if result_column in columns_to_encode:
+#         columns_to_encode.remove(result_column)
+#
+#     X = df3.drop(columns=[result_column])  # Use drop to get features
+#     y = df3[result_column]  # Target variable
+#
+#     # Define numerical columns
+#     numerical_features = df3.select_dtypes(include=['int64', 'float64']).columns.tolist()
+#
+#     # Create a column transformer for preprocessing
+#     preprocessor = ColumnTransformer(
+#         transformers=[
+#             ('num', StandardScaler(), numerical_features),
+#             ('cat', OneHotEncoder(), columns_to_encode)
+#         ])
+#
+#     # Create the pipeline with a classifier
+#     pipeline = Pipeline(steps=[
+#         ('preprocessor', preprocessor),
+#         ('classifier', RandomForestClassifier())
+#     ])
+#
+#     # Split the data
+#     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=10)
+#
 
 def verify_and_parse(value):
     try:

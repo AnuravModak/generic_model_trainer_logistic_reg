@@ -73,11 +73,20 @@ def get_correlation_plot_image_df():
     data = request.json
     try:
         model_name = data["model_name"]
-        product = get_product_json_name(model_name)
-        trainset_path = product["trainModelPath"]
-        df = load_data(trainset_path)
-        img = plot_correlation_matrix_plot(df, model_name)
-        return send_file(img, mimetype='image/png')
+        trainset_fileName = data["train_file_name"]
+        file_list = os.listdir(commons_train_set_file_path)
+        file_path = ""
+        for val in file_list:
+            if trainset_fileName in val:
+                file_path = os.path.join(commons_train_set_file_path, val)
+                break;
+
+        if file_path == "":
+            return jsonify({"error": "File not found"}), 500
+        else:
+            df = load_data(file_path)
+            img = plot_correlation_matrix_plot(df, model_name)
+            return send_file(img, mimetype='image/png')
     except Exception as e:
         return jsonify({"error": str(e.__cause__)}), 500
 
@@ -119,4 +128,4 @@ def health_check():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=7654)
+    app.run(debug=True, port=7654, host="0.0.0.0")
