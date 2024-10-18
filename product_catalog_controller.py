@@ -109,7 +109,7 @@ def get_correlation_plot_text():
     number_of_train_data = data['number_of_train_data']
 
     # Check if any of the required parameters are missing
-    if not all([trainset_name, model_name, result_column, number_of_train_data]):
+    if not all([trainset_name, model_name, number_of_train_data]):
         return jsonify({"error": "improper request"}), 400
 
     corr_mat = get_correlation_matrix(trainset_name, model_name, columns_to_encode, result_column, number_of_train_data)

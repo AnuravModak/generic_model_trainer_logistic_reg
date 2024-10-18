@@ -253,7 +253,7 @@ def get_correlation_matrix(trainset_name, model_name, columns_to_encode, result_
     df = df.head(int(number_of_train_data))
     if len(columns_to_encode) == 0:
         columns_to_encode = df.columns.tolist()
-    if result_column in columns_to_encode:
+    if result_column and result_column in columns_to_encode:
         columns_to_encode.remove(result_column)
 
     corr_mat = print_correlation_matrix(df)
