@@ -175,7 +175,7 @@ data_point = {
     "poutcome": "nonexistent",
     "nr.employed": 5191
 }
-# test_model("airline_model", row_values, "satisfaction")
+print(test_model("airline_customer_satisfaction", row_values, "satisfaction"))
 
 
 data = {
@@ -196,7 +196,7 @@ data = {
     'Subscribed': ['yes', 'yes', 'yes', 'yes', 'yes', 'yes']
 }
 
-print("Accuracy ############# "+str(train_model("bank-full.csv", "y", "bank-num.csv", "bank_saransh", 1)))
+# print("Accuracy ############# "+str(train_model("bank-full.csv", "y", "bank-num.csv", "bank_saransh", 1)))
 
 
 single_data_point = {
@@ -256,4 +256,4 @@ single_data_point = {
     'incompetence': 1
 }
 
-# test_model("divorce_model", single_data_point, "Divorce_Y_N")
+# print(test_model("divorce_model_1", single_data_point, "Divorce_Y_N"))

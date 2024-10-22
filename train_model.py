@@ -460,7 +460,7 @@ def test_model(model_name, single_data_point1, result_column):
         # Display prediction
         print("Prediction for the single data point using the loaded model:")
 
-        decision = get_mapping_real_value(load(f"{model_name}/{model_name}_original_cleaned_df.joblib"), load(f"{model_name}/{model_name}_encoded_df.joblib"), result_column, prediction_single[0])
+        decision = get_mapping_real_value(load(base_path+model_name+"_original_cleaned_df.joblib"), load(base_path+model_name+"_log_reg_encoded_df.joblib"), result_column, prediction_single[0])
         print(decision)
         return decision
 

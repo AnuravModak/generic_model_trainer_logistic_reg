@@ -212,5 +212,39 @@
         "testModelPath": "../commons/test_sets/divorse.csv",
         "decisionColumn": "Divorce_Y_N",
         "modelFlag": 1
+    },
+    {
+        "id": 6,
+        "name": "Banking",
+        "accuracy": 0.8920450364265214,
+        "encodedColumns": [
+            "age",
+            "job",
+            "marital",
+            "education",
+            "housing",
+            "loan",
+            "contact"
+        ],
+        "trainModelPath": "../commons/train_sets/trainset copy 4.csv",
+        "testModelPath": "../commons/test_sets/testset copy 2.csv",
+        "decisionColumn": "Subscribed",
+        "modelFlag": 1
+    },
+    {
+        "id": 7,
+        "name": "Banking1",
+        "accuracy": 0.8920450364265214,
+        "encodedColumns": [
+            "age",
+            "job",
+            "marital",
+            "education",
+            "housing"
+        ],
+        "trainModelPath": "../commons/train_sets/trainset copy 4.csv",
+        "testModelPath": "../commons/test_sets/testset copy 2.csv",
+        "decisionColumn": "Subscribed",
+        "modelFlag": 1
     }
 ]
