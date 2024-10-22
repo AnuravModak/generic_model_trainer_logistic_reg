@@ -35,6 +35,27 @@ def train_model_api():
     except Exception as e:
         return jsonify({"error": str(e.__cause__)}), 500
 
+@product_bp.route('/test-model', methods=['POST'])
+def test_model_api():
+    data = request.json
+    try:
+        # Call the train_model function with the provided data
+        single_data_point = data["single_data_point"]
+        model_name = data["model_name"]
+        decision_column = data["decision_column"]
+        if model_name is not None and single_data_point is not None and decision_column is not None:
+            results = test_model(model_name, single_data_point, decision_column)
+            return jsonify(results), 200
+        else:
+            return jsonify({"error": "invalid request"}), 400
+        # if isinstance(results, tuple):
+        #     # If results is a tuple, convert it to a JSON response
+        #     response = {result if (i + 1) % 2 != 0 else f"result_{i+1}" : result for i, result in enumerate(results)}
+        # else:
+        #     # If results is a single value, return it directly
+        #     response = {"accuracy": results}
+    except Exception as e:
+        return jsonify({"error": str(e.__cause__)}), 500
 
 @product_bp.route('/get-all-products', methods=['GET'])
 def get_all_products():

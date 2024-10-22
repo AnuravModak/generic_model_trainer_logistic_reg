@@ -437,7 +437,7 @@ def test_model(model_name, single_data_point1, result_column):
     base_path = commons_models_file_path + model_name+os.path.sep
 
     try:
-        loaded_model = load(base_path+model_name+'.joblib')
+        loaded_model = load(base_path+model_name+'_log_reg.joblib')
     except FileNotFoundError:
         print("Model file '"+model_name+".joblib' not found. Exiting test process.")
         return
@@ -462,6 +462,7 @@ def test_model(model_name, single_data_point1, result_column):
 
         decision = get_mapping_real_value(load(f"{model_name}/{model_name}_original_cleaned_df.joblib"), load(f"{model_name}/{model_name}_encoded_df.joblib"), result_column, prediction_single[0])
         print(decision)
+        return decision
 
 
 def is_numeric(s):
