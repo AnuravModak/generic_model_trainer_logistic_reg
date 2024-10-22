@@ -1,5 +1,6 @@
 import json
 
+import numpy as np
 from flask import Flask, request, jsonify, Blueprint, send_file
 from flask_cors import CORS
 from json_operations import *
@@ -47,7 +48,14 @@ def test_model_api():
         decision_column = data["decision_column"]
         if model_name is not None and single_data_point is not None and decision_column is not None:
             results = test_model(model_name, single_data_point, decision_column)
-            return jsonify({decision_column:results}), 200
+
+            # Check if the result is an int64 or int
+            if isinstance(results, np.int64):
+                return jsonify({decision_column: int(results)}), 200
+            elif isinstance(results, int):
+                return jsonify({decision_column: results}), 200
+            else:
+                return jsonify({decision_column: results}), 200
         else:
             return jsonify({"error": "invalid request"}), 400
         # if isinstance(results, tuple):

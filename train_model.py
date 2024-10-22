@@ -439,8 +439,9 @@ def test_model(model_name, single_data_point1, result_column):
     try:
         loaded_model = load(base_path+model_name+'_log_reg.joblib')
     except FileNotFoundError:
-        print("Model file '"+model_name+".joblib' not found. Exiting test process.")
-        return
+        response ="Model file '"+model_name+".joblib' not found. Exiting test process."
+        print(response)
+        return response
     if loaded_model:
         single_data_point = json.loads(json.dumps(single_data_point1))
 

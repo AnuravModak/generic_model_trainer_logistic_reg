@@ -246,5 +246,21 @@
         "testModelPath": "../commons/test_sets/testset copy 2.csv",
         "decisionColumn": "Subscribed",
         "modelFlag": 1
+    },
+    {
+        "id": 8,
+        "name": "banking_for_test_1",
+        "accuracy": 0.8920450364265214,
+        "encodedColumns": [
+            "age",
+            "job",
+            "marital",
+            "education",
+            "loan"
+        ],
+        "trainModelPath": "../commons/train_sets/trainset copy 4.csv",
+        "testModelPath": "../commons/test_sets/testset copy 4.csv",
+        "decisionColumn": "Subscribed",
+        "modelFlag": 1
     }
 ]
