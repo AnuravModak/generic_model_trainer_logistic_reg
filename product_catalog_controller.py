@@ -21,6 +21,8 @@ def train_model_api():
     try:
         # Call the train_model function with the provided data
         columns_to_encode = data["encodedColumns"]
+        if columns_to_encode == None:
+            columns_to_encode = ""
         results = train_model(data["trainFilePath"], data["decisionColumn"], data["testFilePath"], data["modelName"],
                               columns_to_encode, int(data["modelFlag"]))
 
