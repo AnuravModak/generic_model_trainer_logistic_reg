@@ -1,4 +1,4 @@
-[
+
     {
         "id": 1,
         "name": "divorce_model",
@@ -261,6 +261,33 @@
         "trainModelPath": "../commons/train_sets/trainset copy 4.csv",
         "testModelPath": "../commons/test_sets/testset copy 4.csv",
         "decisionColumn": "Subscribed",
+        "modelFlag": 1
+    },
+    {
+        "id": 9,
+        "name": "bank_saransh",
+        "accuracy": 0.8375414435093088,
+        "encodedColumns": [
+            "age",
+            "job",
+            "marital",
+            "education",
+            "default",
+            "balance",
+            "housing",
+            "loan",
+            "contact",
+            "day",
+            "month",
+            "duration",
+            "campaign",
+            "pdays",
+            "previous",
+            "poutcome"
+        ],
+        "trainModelPath": "../commons/train_sets/bank-full.csv",
+        "testModelPath": "../commons/test_sets/bank-num.csv",
+        "decisionColumn": "y",
         "modelFlag": 1
     }
 ]

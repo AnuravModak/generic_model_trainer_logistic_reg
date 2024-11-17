@@ -1,0 +1,7 @@
+age,job,marital,education,housing,loan,contact,month,day_of_week,duration,campaign,pdays,poutcome,nr.employed,Subscribed
+41,blue-collar,divorced,basic.4y,yes,no,telephone,may,mon,1575,1,999,nonexistent,5191,yes
+49,entrepreneur,married,university.degree,yes,no,telephone,may,mon,1042,1,999,nonexistent,5191,yes
+49,technician,married,basic.9y,no,no,telephone,may,mon,1467,1,999,nonexistent,5191,yes
+41,technician,married,professional.course,yes,no,telephone,may,mon,579,1,999,nonexistent,5191,yes
+45,blue-collar,married,basic.9y,yes,no,telephone,may,mon,461,1,999,nonexistent,5191,yes
+42,blue-collar,married,basic.9y,yes,yes,telephone,may,mon,673,2,999,nonexistent,5191,yes
