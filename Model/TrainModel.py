@@ -105,7 +105,7 @@ class TrainModel:
             columns_to_encode (list): Columns to encode for categorical data.
         """
         main_config = MainConfiguration()
-        config = main_config.initialize_environment("../commons/config.json")
+        config = main_config.initialize_environment("../../commons/config.json")
 
         # Ensure model directory exists
         main_config.preprocessing.create_directory(

@@ -188,6 +188,6 @@ class ProductAPI:
 
 
 # Initialize and run the app
-# if __name__ == "__main__":
-#     api = ProductAPI()
-#     api.run()
+if __name__ == "__main__":
+    api = ProductAPI()
+    api.run()

@@ -10,7 +10,7 @@ warnings.filterwarnings("ignore")
 # -------------------------------
 
 
-with open('../commons/config.json', 'r') as config_file:
+with open('../../commons/config.json', 'r') as config_file:
     config = json.load(config_file)
 
 
